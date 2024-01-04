@@ -1,14 +1,16 @@
 {
+  {
   "scripts": {
     "custom-script": "node your_script.js",
     "start": "npm run custom-script"
-  }
-},
-{
-  "dependencies": {
-    "csv-parse": "^5.5.2",
-    "csv-stringify": "^6.4.4",
-    "fs": "^0.0.1-security",
-    "papaparse": "^5.4.1"
+    }
+  },
+  {
+    "dependencies": {
+      "csv-parse": "^5.5.2",
+      "csv-stringify": "^6.4.4",
+      "fs": "^0.0.1-security",
+      "papaparse": "^5.4.1"
+    }
   }
 }
