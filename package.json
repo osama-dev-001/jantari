@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "custom-script": "node your_script.js",
+    "custom-script": "node index.js",
     "start": "npm run custom-script"
   },
   "dependencies": {
