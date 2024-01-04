@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "custom-script": "node your_script.js",
+    "start": "npm run custom-script"
+  }
+},
+{
   "dependencies": {
     "csv-parse": "^5.5.2",
     "csv-stringify": "^6.4.4",
