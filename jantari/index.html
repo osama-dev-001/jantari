@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Jantari</title>
+   <!-- Latest compiled and minified CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Latest compiled JavaScript -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"></script>
+   <script src="main.js"></script>
+   <script src="ahmedabad.js"></script>
+</head>
+
+<body>
+   <h1 id="date" class="date">Select options to view data</h1>
+   <div class="row my-4">
+      <div class="col-md-4">
+         <a href="../jantari/ahmedabad/image.html" class="image-html">View Ahmedabad Data as Image</a>
+      </div>
+      <div class="col-md-4">
+         <select name="city" id="city" class="form-input">
+            <option value="" selected disabled>Select City</option>
+            <option value="ahmedabad">Ahmedabad</option>
+            <option value="varanasi">Varanasi</option>
+            <option value="delhi">Delhi</option>
+         </select>
+      </div>
+      <div class="col-md-4">
+         <select name="type" id="type" class="form-input">
+            <option value="" selected disabled>Select Type</option>
+            <option value="image">Image</option>
+            <option value="text">Text</option>
+         </select>
+      </div>
+   </div>
+   <div class="row my-4">
+      <div class="col-md-4"> Previous Time: <input class="previous-time" disabled></input>
+      </div>
+      <div class="col-md-4"> Current Time: <input class="current-time" disabled></input>
+      </div>
+      <div class="col-md-4">
+         <div class="next">
+            <h3>Current Salah Time Ends at: </h3>
+            <input type="text" id="nextPrayerTime" disabled>
+         </div>
+      </div>
+      <div class="col-md-4">
+      </div>
+   </div>
+   <div class="row my-4">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+      </div>
+   </div>
+   <div class="row my-4">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+      </div>
+   </div>
+   <script>
+      function getFormattedDateTime() {
+         const now = new Date();
+
+         const month = now.toLocaleString('default', { month: 'long' });
+         const date = String(now.getDate()).padStart(2, '0');
+         let hours = now.getHours();
+         const minutes = String(now.getMinutes()).padStart(2, '0');
+         const seconds = String(now.getSeconds()).padStart(2, '0');
+
+         const ampm = hours >= 12 ? 'PM' : 'AM';
+         hours = hours % 12;
+         hours = hours ? hours : 12; // the hour '0' should be '12'
+         hours = String(hours).padStart(2, '0');
+
+         const result = { month, date, hours, minutes, seconds, ampm };
+         return result;
+      }
+
+      function parseTime(timeStr) {
+         const [time, modifier] = timeStr.split(' ');
+         let [hours, minutes] = time.split(':').map(Number);
+
+         if (modifier === 'PM' && hours !== 12) {
+            hours += 12;
+         } else if (modifier === 'AM' && hours === 12) {
+            hours = 0;
+         }
+
+         return { hours, minutes };
+      }
+
+      function isLater(time1, time2) {
+         if (time1.hours > time2.hours) {
+            return true;
+         }
+         if (time1.hours === time2.hours && time1.minutes > time2.minutes) {
+            return true;
+         }
+         return false;
+      }
+
+      const dateTime = getFormattedDateTime();
+      console.log('Current time:', dateTime);
+
+      if (data[dateTime.month]) {
+         const todayData = data[dateTime.month].find(entry => entry.Date == dateTime.date);
+         console.log('Today\'s data:', todayData);
+
+         if (todayData) {
+            const currentTime = parseTime(`${dateTime.hours}:${dateTime.minutes} ${dateTime.ampm}`);
+
+            const sortedPrayerTimes = Object.entries(todayData).filter(([key, value]) => {
+               return key !== 'Date';
+            }).map(([key, value]) => {
+               const parsedTime = parseTime(value);
+               return { key, time: parsedTime, original: value };
+            }).sort((a, b) => {
+               if (a.time.hours !== b.time.hours) {
+                  return a.time.hours - b.time.hours;
+               }
+               return a.time.minutes - b.time.minutes;
+            });
+
+            const nextPrayerIndex = sortedPrayerTimes.findIndex(prayer => isLater(prayer.time, currentTime));
+            const previousTwoRecords = sortedPrayerTimes.slice(Math.max(0, nextPrayerIndex - 2), nextPrayerIndex);
+            const nextPrayerTime = sortedPrayerTimes[nextPrayerIndex];
+            $('#nextPrayerTime').val(nextPrayerTime.key + ": " + nextPrayerTime.original)
+
+            var previousSalahTime = previousTwoRecords[0].key + ": " + previousTwoRecords[0].original
+            var currentSalahTime = previousTwoRecords[1].key + ": " + previousTwoRecords[1].original
+            console.log('Previous two records:', currentSalahTime);
+            $('.current-time').val(currentSalahTime);
+            $('.previous-time').val(previousSalahTime);
+            console.log('Next prayer time:', nextPrayerTime);
+         } else {
+            console.log('No data found for today\'s date.');
+         }
+      } else {
+         console.log('No data found for the current month.');
+      }
+
+
+      $(document).ready(function () {
+         $("#city").change(function () {
+            var city = $("#city").val();
+            var type = $("#type").val();
+         })
+
+      })
+
+   </script>
+</body>
+
+</html>
