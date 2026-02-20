@@ -1,1 +1,0 @@
-# osamaSStech.github.io
