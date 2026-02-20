@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Jantari</title>
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<!-- <script src="ahmedabad.js"></script> -->
+	<script src="assets/ahmedabad/ahmedabad.js"></script>
+</head>
+
+<body>
+	<div class="container mt-2">
+		<div id="btn-container" class="row justify-content-center gap-4">
+			<button class="btn btn-outline-success col-md-2" id="show-all">Show All</button>
+			<button class="btn btn-outline-primary col-md-2" id="first-quarter">Show First Quarter</button>
+			<button class="btn btn-outline-warning col-md-2" id="second-quarter">Show Second Quarter</button>
+			<button class="btn btn-outline-danger col-md-2" id="third-quarter">Show Third Quarter</button>
+			<button class="btn btn-outline-primary col-md-2" id="fourth-quarter">Show Fourth Quarter</button>
+		</div>
+	</div>
+	<div id="output" class="row"></div>
+</body>
+<script>
+	const monthColors = [
+		"#BBDEFB", "#C5CAE9", "#ddffcb", "#FFF9C4", "#ffb591",
+		"#ff9691", "#FFF9C4", "#C8E6C9", "#DCEDC8", "#caf9ca",
+		"#bbf8df", "#badcff"
+	];
+
+	const quarters = {
+		"first-quarter": ["January", "February", "March"],
+		"second-quarter": ["April", "May", "June"],
+		"third-quarter": ["July", "August", "September"],
+		"fourth-quarter": ["October", "November", "December"]
+	};
+
+	let i = 0;
+	for (const month in data) {
+		const monthClass = `${month}-container`;
+		const monthDiv = `<div class="col-md-4 my-2 ${monthClass}" data-quarter="${Math.floor(i / 3) + 1}" style="background-color: ${monthColors[i]}">
+								<h3>${month}</h3>
+								<table class="table table-bordered table-striped" style="font-size: small">
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>Fajr</th>
+											<th><img src="assets/images/sunrise.png" alt="sunrise" width="20px"></th>
+											<th><img src="assets/images/brightSun.png" alt="brightSun" width="20px"></th>
+											<th>Asr</th>
+											<th><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sunset" viewBox="0 0 16 16" style="color: tomato;"><path d="M7.646 4.854a.5.5 0 0 0 .708 0l1.5-1.5a.5.5 0 0 0-.708-.708l-.646.647V1.5a.5.5 0 0 0-1 0v1.793l-.646-.647a.5.5 0 1 0-.708.708zm-5.303-.51a.5.5 0 0 1 .707 0l1.414 1.413a.5.5 0 0 1-.707.707L2.343 5.05a.5.5 0 0 1 0-.707zm11.314 0a.5.5 0 0 1 0 .706l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zM8 7a3 3 0 0 1 2.599 4.5H5.4A3 3 0 0 1 8 7m3.71 4.5a4 4 0 1 0-7.418 0H.499a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-3.79zM0 10a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 10m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/></svg></th>
+											<th>Isha</th>
+											<th><img src="assets/images/midnight.png" alt="midnight" width="20px"></th>
+										</tr>
+									</thead>
+									<tbody class="month-data">
+									</tbody>
+								</table>
+							</div>`;
+		$('#output').append(monthDiv);
+
+		data[month].forEach(entry => {
+			const dayRow = `<tr>
+								<td>${entry.Date}</td>
+								<td>${entry.Fajr}</td>
+								<td>${entry.Sunrise}</td>
+								<td>${entry.Dhuhr}</td>
+								<td>${entry.Asr}</td>
+								<td>${entry.Maghrib}</td>
+								<td>${entry.Isha}</td>
+								<td>${entry.Midnight}</td>
+							</tr>`;
+			$(`.${monthClass} .month-data`).append(dayRow);
+		});
+		i++;
+	}
+
+	// Button click handlers to show/hide quarters
+	$('#first-quarter').click(() => showQuarter(1));
+	$('#second-quarter').click(() => showQuarter(2));
+	$('#third-quarter').click(() => showQuarter(3));
+	$('#fourth-quarter').click(() => showQuarter(4));
+	$('#show-all').click(() => $('#output .col-md-4').show());
+
+	function showQuarter(quarterNumber) {
+		$('#output .col-md-4').hide(); // Hide all months
+		$(`[data-quarter="${quarterNumber}"]`).show(); // Show only the selected quarter
+	}
+</script>
+
+</html>
