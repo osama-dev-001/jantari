@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Jantari 2026</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="vns-ramadan.js"></script>
+    <style>
+        :root {
+            --emerald: #064e3b;
+            --gold: #fbbf24;
+        }
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        .main-card {
+            background: linear-gradient(135deg, var(--emerald) 0%, #065f46 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-top: 2rem;
+        }
+        .time-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .time-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .time-value {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+        .ramadan-badge {
+            background-color: var(--gold);
+            color: var(--emerald);
+            font-weight: 800;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+        }
+        .link-section a {
+            text-decoration: none;
+            color: var(--emerald);
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .link-section a:hover {
+            color: #059669;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card main-card p-4">
+                    <div class="text-center mb-4">
+                        <span class="ramadan-badge mb-2 d-inline-block">Ramadan <span id="disp-ramadan">--</span></span>
+                        <h2 id="disp-date" class="mt-2 fw-light">-- --</h2>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="time-box">
+                                <span class="label">Sehri Ends</span>
+                                <span class="time-value" id="disp-sehri">--:--</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="time-box">
+                                <span class="label">Iftar Time</span>
+                                <span class="time-value" id="disp-iftar">--:--</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4 opacity-75">
+                        <small>Data for Varanasi</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const today = new Date();
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedDate = `${monthNames[today.getMonth()]} ${String(today.getDate()).padStart(2, '0')}`;
+
+        const todayData = data.find(item => item.Date === formattedDate);
+
+        if (todayData) {
+            $('#disp-ramadan').text(todayData.Ramadan);
+            $('#disp-date').text(todayData.Date + ", 2026");
+            $('#disp-sehri').text(todayData.Fajr);
+            $('#disp-iftar').text(todayData.Maghrib);
+        } else {
+            $('.main-card').html('<div class="text-center p-5"><h3>No data for today</h3><p>Ramadan has not started yet or the date is out of range.</p></div>');
+        }
+    </script>
+</body>
+</html>
