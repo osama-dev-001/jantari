@@ -1,0 +1,354 @@
+:root {
+    --primary-blue: #0d6efd;
+    --primary-dark: #0a58ca;
+}
+
+body { 
+    background-color: #f4f7f6; 
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+}
+
+/* Header & Themes */
+.clock-section {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+    color: white; 
+    padding: 40px 0; 
+    margin-bottom: 20px;
+    border-bottom-left-radius: 30px; 
+    border-bottom-right-radius: 30px;
+    transition: all 0.5s ease;
+}
+
+.vns-theme {
+    background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
+}
+
+/* Live View List */
+.status-card { border-radius: 15px; border: none; }
+
+.list-group-item { 
+    padding: 1rem 1.5rem; 
+    transition: all 0.3s ease; 
+    border-left: 6px solid transparent; 
+    margin-bottom: 2px;
+}
+
+/* Fix for Emoji alignment */
+.emoji-container {
+    width: 40px;      /* Fixed width ensures labels align vertically */
+    height: 40px;
+    font-size: 1.5rem; /* Large and clear */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.03); /* Subtle background circle */
+    border-radius: 50%;
+    flex-shrink: 0;   /* Prevents emoji from squishing on small screens */
+}
+
+/* Align names and badges */
+.salah-name-wrapper {
+    line-height: 1.2;
+}
+
+.list-group-item {
+    transition: background 0.3s ease;
+    border-left: 5px solid transparent;
+}
+
+/* Table Emoji Style */
+/* Yearly Table Alignment */
+.jantari-table th {
+    min-width: 65px; /* Ensures enough space for emoji + label */
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-emoji {
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.small-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+}
+
+.jantari-table td {
+    font-size: 0.85rem;
+    color: #333;
+}
+
+/* Make Today's row pop in the table */
+.table-warning td {
+    color: #856404 !important;
+    background-color: #fff3cd !important;
+}
+
+/* Horizontal scroll smooth-fix for mobile */
+.table-responsive {
+    scrollbar-width: thin;
+    scrollbar-color: #dee2e6 transparent;
+}
+
+/* Premium Jantari Grid Styling */
+.jantari-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.jantari-card:hover {
+    transform: translateY(-5px);
+}
+
+.jantari-table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 3px solid #eee;
+    padding: 15px 5px !important;
+}
+
+/* Floating Emoji Style */
+.table-emoji-box {
+    font-size: 1.4rem;
+    background: white;
+    width: 35px;
+    height: 35px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.table-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a0a0a0;
+}
+
+/* The "Today" Highlight in Table */
+.table-warning {
+    background-color: rgba(255, 193, 7, 0.1) !important;
+    position: relative;
+}
+
+.table-warning::after {
+    content: 'TODAY';
+    position: absolute;
+    left: 0;
+    font-size: 0.5rem;
+    background: #ffc107;
+    color: #000;
+    padding: 2px 5px;
+    font-weight: bold;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Time Typography */
+.jantari-table td {
+    font-family: 'JetBrains Mono', 'Courier New', monospace; /* Very clean for numbers */
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+.active-salah {
+    background: linear-gradient(90deg, #198754, #20c997) !important;
+    box-shadow: 0 4px 15px rgba(25, 135, 84, 0.3);
+}
+
+.next-salah {
+    background: linear-gradient(90deg, #ffbebe, #fd7e14) !important;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* Base Table Styling */
+.jantari-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* 1. Date Column (Neutral) */
+.jantari-table td:nth-child(1) { background-color: #fdfdfd; font-weight: bold; color: #666; }
+
+/* 2. Morning Lane (Fajr/Sunrise) - Cool Mint/Blue */
+.jantari-table td:nth-child(2), 
+.jantari-table td:nth-child(3) { background-color: rgba(224, 247, 250, 0.3); }
+
+/* 3. Midday Lane (Zawal/Dhuhr) - Soft Yellow/Amber */
+.jantari-table td:nth-child(4), 
+.jantari-table td:nth-child(5) { background-color: rgba(255, 248, 225, 0.4); }
+
+/* 4. Afternoon Lane (Asr) - Warm Orange */
+.jantari-table td:nth-child(6) { background-color: rgba(255, 243, 224, 0.3); }
+
+/* 5. Evening Lane (Maghrib/Iftar) - Sunset Rose */
+.jantari-table td:nth-child(7) { background-color: rgba(252, 228, 236, 0.4); }
+
+/* 6. Night Lane (Isha/Midnight) - Deep Lavender */
+.jantari-table td:nth-child(8), 
+.jantari-table td:nth-child(9) { background-color: rgba(243, 229, 245, 0.4); }
+
+/* Hover effect to keep it interactive */
+.jantari-table tr:hover td {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    transition: 0.2s;
+}
+
+/* Maintain "Today" prominence over the colors */
+.table-warning td {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+    border-top: 1px solid #e1ad01;
+    border-bottom: 1px solid #e1ad01;
+}
+
+/* Row style in Yearly Grid */
+/* Table Layout */
+.jantari-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Vertical Column Tinting */
+.jantari-table td:nth-child(2), .jantari-table td:nth-child(3) { background-color: rgba(0, 123, 255, 0.03); } /* Morning */
+.jantari-table td:nth-child(4), .jantari-table td:nth-child(5) { background-color: rgba(255, 193, 7, 0.03); }  /* Midday */
+.jantari-table td:nth-child(7) { background-color: rgba(253, 126, 20, 0.04); } /* Evening/Iftar */
+
+/* Row Striping (The Row-wise feel) */
+.jantari-table tbody tr:nth-child(even) {
+    background-color: rgba(0,0,0,0.01);
+}
+
+/* Emoji Box Colors */
+.accent-blue { background: #e7f3ff; color: #0d6efd; }
+.accent-gold { background: #fff9e6; color: #ffc107; }
+.accent-orange { background: #fff0e6; color: #fd7e14; }
+.accent-purple { background: #f3eaff; color: #6f42c1; }
+.accent-gray { background: #f8f9fa; color: #6c757d; }
+
+/* Today's Row - Overrides everything with a "Glow" */
+.today-row td {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+    font-weight: bold;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.today-row td:first-child { border-radius: 12px 0 0 12px; }
+.today-row td:last-child { border-radius: 0 12px 12px 0; }
+
+/* Enhanced Clock Section */
+/* Slimline Header v3.0 */
+/* Compact Header with Focused Glass Center */
+.clock-section {
+    background: linear-gradient(180deg, #198754 0%, #146c43 100%);
+    color: white;
+    padding: 15px 0 20px 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    min-height: 80px;
+}
+
+/* Glassmorphism applied ONLY to the central clock box */
+.glass-time-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 2;
+}
+
+#live-clock {
+    font-size: 1.2 rem; /* Prominent but scaled for mobile */
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+/* Date and Location remain as side anchors */
+#display-date {
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.city-pill {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#location-switcher {
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+/* Fix for invisible dropdown text */
+#location-switcher option {
+    background-color: #ffffff; /* Ensures the dropdown background is white */
+    color: #333333 !important; /* Forces text to be dark gray/black */
+}
+
+/* Ensure the selected value remains white in the pill */
+#location-switcher {
+    color: white !important;
+}
+
+/* Live pulsing effect for the clock colon */
+@keyframes blink {
+    50% { opacity: 0.3; }
+}
+
+.clock-colon {
+    animation: blink 1s step-start infinite;
+    margin: 0 2px;
+}
+
+.next-salah-countdown {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    opacity: 0.9;
+}
+
+#countdown-timer {
+    color: #ffc107; /* Golden amber color for the ticking timer */
+}

@@ -1,0 +1,280 @@
+/* 1. GLOBAL & THEMES */
+:root {
+    --primary-blue: #0d6efd;
+    --primary-green: #198754;
+    --glass-bg: rgba(255, 255, 255, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+body { 
+    background-color: #f4f7f6; 
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+}
+
+/* Header Base */
+.clock-section {
+    background: linear-gradient(180deg, var(--primary-green) 0%, #146c43 100%);
+    color: white;
+    padding: 15px 0 20px 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+/* Theme Overrides */
+.vns-theme { background: linear-gradient(180deg, var(--primary-green) 0%, #146c43 100%) !important; }
+.amd-theme { background: linear-gradient(180deg, var(--primary-blue) 0%, #0a58ca 100%) !important; }
+
+/* 2. HEADER COMPONENTS */
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    min-height: 80px;
+}
+
+/* Glass Clock Box */
+.glass-time-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    padding: 8px 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 2;
+}
+
+#live-clock {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+#display-date {
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Countdown Row */
+.next-salah-countdown {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    opacity: 0.9;
+}
+
+#countdown-timer { color: #ffc107; }
+
+/* Location Dropdown Pill */
+.city-pill {
+    background: var(--glass-bg);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
+}
+
+#location-switcher {
+    background: transparent;
+    border: none;
+    color: white !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    outline: none;
+    cursor: pointer;
+}
+
+#location-switcher option {
+    background-color: #ffffff;
+    color: #333333 !important;
+}
+
+/* 3. LIVE SCHEDULE LIST */
+.list-group-item { 
+    padding: 1rem 1.5rem; 
+    transition: all 0.3s ease; 
+    border-left: 6px solid transparent; 
+    margin-bottom: 2px;
+    border-radius: 10px !important;
+}
+
+.emoji-container {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.03);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* List Highlighting */
+.active-salah {
+    background: linear-gradient(90deg, #198754, #20c997) !important;
+    box-shadow: 0 4px 15px rgba(25, 135, 84, 0.3);
+    color: white !important;
+}
+
+.next-salah {
+    background: linear-gradient(90deg, #ffbebe, #fd7e14) !important;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+    color: white !important;
+}
+
+/* 4. YEARLY JANTARI TABLE - RESTORED PREMIUM LOOK */
+.jantari-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.jantari-table {
+    border-collapse: separate;
+    border-spacing: 0; /* Keeps the clean, solid feel */
+    width: 100%;
+}
+
+/* Restored Typography */
+.jantari-table td {
+    font-family: 'JetBrains Mono', 'Courier New', monospace; /* Professional number alignment */
+    font-size: 0.85rem;
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    color: #333;
+}
+
+/* Header Emoji & Labels */
+.jantari-table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 3px solid #eee;
+    padding: 15px 5px !important;
+    vertical-align: bottom;
+}
+
+.table-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a0a0a0;
+    margin-top: 5px;
+}
+
+/* 2. RESTORED COLUMN TINTING (The "Lanes") */
+/* Date Column */
+.jantari-table td:nth-child(1) { 
+    background-color: #fdfdfd; 
+    font-weight: bold; 
+    color: #666; 
+    font-family: inherit; /* Keep date in standard font */
+}
+
+/* Morning Lane (Fajr/Sunrise) - Cool Mint/Blue */
+.jantari-table td:nth-child(2), 
+.jantari-table td:nth-child(3) { background-color: rgba(224, 247, 250, 0.4); }
+
+/* Midday Lane (Zawal/Dhuhr) - Soft Amber */
+.jantari-table td:nth-child(4), 
+.jantari-table td:nth-child(5) { background-color: rgba(255, 248, 225, 0.5); }
+
+/* Afternoon Lane (Asr) - Warm Orange */
+.jantari-table td:nth-child(6) { background-color: rgba(255, 243, 224, 0.4); }
+
+/* Evening Lane (Maghrib/Iftar) - Sunset Rose */
+.jantari-table td:nth-child(7) { background-color: rgba(252, 228, 236, 0.5); }
+
+/* Night Lane (Isha/Midnight) - Deep Lavender */
+.jantari-table td:nth-child(8), 
+.jantari-table td:nth-child(9) { background-color: rgba(243, 229, 245, 0.5); }
+
+/* 3. RESTORED TODAY HIGHLIGHT */
+.today-row td {
+    background-color: #ffc107 !important; /* Solid Gold */
+    color: #000 !important;
+    font-weight: 800 !important;
+    border-top: 1px solid #e1ad01;
+    border-bottom: 1px solid #e1ad01;
+}
+
+/* Hover effect for interactivity */
+.jantari-table tr:hover td {
+    filter: brightness(0.95);
+    transition: 0.2s;
+}
+
+/* 5. ANIMATIONS & FIXES */
+@keyframes blink { 50% { opacity: 0.3; } }
+.clock-colon { animation: blink 1s step-start infinite; margin: 0 2px; }
+
+.table-responsive {
+    scrollbar-width: thin;
+    scrollbar-color: #dee2e6 transparent;
+}
+
+/* 4. PREMIUM VERTICAL LANES & TYPOGRAPHY */
+.jantari-table td {
+    font-family: 'JetBrains Mono', 'Courier New', monospace; /* Sharp number alignment */
+    font-size: 0.85rem;
+    padding: 14px 10px;
+    vertical-align: middle;
+    text-align: center;
+    /* Clean vertical separator */
+    border-right: 1px solid rgba(0, 0, 0, 0.04); 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+/* Remove border from the last column */
+.jantari-table td:last-child, 
+.jantari-table th:last-child {
+    border-right: none;
+}
+
+/* 2. REFINED COLUMN TINTING (Restored Lanes) */
+/* Morning Lane */
+.jantari-table td:nth-child(2), 
+.jantari-table td:nth-child(3) { background-color: rgba(0, 123, 255, 0.04); }
+
+/* Midday Lane */
+.jantari-table td:nth-child(4), 
+.jantari-table td:nth-child(5) { background-color: rgba(255, 193, 7, 0.05); }
+
+/* Evening/Iftar Lane */
+.jantari-table td:nth-child(7) { background-color: rgba(253, 126, 20, 0.06); }
+
+/* Date Column - Solid feel */
+.jantari-table td:nth-child(1) {
+    background-color: #f8f9fa !important;
+    font-weight: 800;
+    color: #444;
+    font-family: inherit; /* Standard font for dates */
+    border-right: 2px solid rgba(0,0,0,0.08); /* Stronger separator for the date */
+}
+
+.jantari-table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 3px solid #eee;
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 5px !important;
+}

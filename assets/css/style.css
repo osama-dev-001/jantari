@@ -1,0 +1,267 @@
+/* ==========================================
+   1. GLOBAL STYLES & VARIABLES
+   ========================================== */
+:root {
+    --primary-blue: #0d6efd;
+    --primary-dark: #0a58ca;
+}
+
+body { 
+    background-color: #f4f7f6; 
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+}
+
+/* ==========================================
+   2. HEADER & CLOCK SECTION (Glassmorphism)
+   ========================================== */
+.clock-section {
+    background: linear-gradient(180deg, #198754 0%, #146c43 100%);
+    color: white;
+    padding: 15px 0 20px 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.vns-theme {
+    background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    min-height: 80px;
+}
+
+/* Glassmorphism Clock Box */
+.glass-time-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 2;
+}
+
+#live-clock {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+#display-date {
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Countdown Row */
+.next-salah-countdown {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    opacity: 0.9;
+}
+
+#countdown-timer {
+    color: #ffc107;
+}
+
+/* Clock Colon Animation */
+@keyframes blink {
+    50% { opacity: 0.3; }
+}
+
+.clock-colon {
+    animation: blink 1s step-start infinite;
+    margin: 0 2px;
+}
+
+/* City Switcher Pill */
+.city-pill {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#location-switcher {
+    background: transparent;
+    border: none;
+    color: white !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+#location-switcher option {
+    background-color: #ffffff;
+    color: #333333 !important;
+}
+
+/* ==========================================
+   3. LIVE VIEW LIST (Daily Schedule)
+   ========================================== */
+.status-card { border-radius: 15px; border: none; }
+
+.list-group-item { 
+    padding: 1rem 1.5rem; 
+    transition: all 0.3s ease; 
+    border-left: 6px solid transparent; 
+    margin-bottom: 2px;
+}
+
+.emoji-container {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.03);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.salah-name-wrapper {
+    line-height: 1.2;
+}
+
+/* Highlight States */
+.active-salah {
+    background: linear-gradient(90deg, #198754, #20c997) !important;
+    box-shadow: 0 4px 15px rgba(25, 135, 84, 0.3);
+}
+
+.next-salah {
+    background: linear-gradient(90deg, #ffbebe, #fd7e14) !important;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* ==========================================
+   4. YEARLY JANTARI TABLE (Grid View)
+   ========================================== */
+.jantari-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.jantari-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.jantari-table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 3px solid #eee;
+    padding: 15px 5px !important;
+}
+
+/* Floating Emoji Style */
+.table-emoji-box {
+    font-size: 1.4rem;
+    background: white;
+    width: 35px;
+    height: 35px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.table-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a0a0a0;
+}
+
+/* Table Body Typography */
+.jantari-table td {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #333;
+    vertical-align: middle;
+}
+
+/* Today's Row Highlight (The Glow) */
+.today-row td {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+    font-weight: bold;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.today-row td:first-child { border-radius: 12px 0 0 12px; position: relative; }
+.today-row td:last-child { border-radius: 0 12px 12px 0; }
+
+.today-row td:first-child::after {
+    content: 'TODAY';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0.5rem;
+    background: #000;
+    color: #ffc107;
+    padding: 2px 4px;
+    font-weight: bold;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Vertical Column Tinting (Lanes) */
+.jantari-table td:nth-child(1) { 
+    background-color: #fdfdfd; 
+    font-weight: bold; 
+    color: #666; 
+    font-family: inherit; /* Keep date in standard font */
+}
+
+.jantari-table td:nth-child(2),
+.jantari-table td:nth-child(3) { background-color: rgba(224, 247, 250, 0.4); }
+
+.jantari-table td:nth-child(4), .jantari-table td:nth-child(5) { background-color: rgba(255, 248, 225, 0.5); }
+.jantari-table td:nth-child(6) { background-color: rgba(255, 243, 224, 0.4); }
+.jantari-table td:nth-child(7) { background-color: rgba(252, 228, 236, 0.4); }
+.jantari-table td:nth-child(8), .jantari-table td:nth-child(9) { background-color: rgba(243, 229, 245, 0.5); }
+
+/* Row Hover & Striping */
+.jantari-table tbody tr:nth-child(even) { background-color: rgba(0,0,0,0.01); }
+.jantari-table tr:hover td { background-color: rgba(0, 0, 0, 0.05) !important; }
+
+/* Utilities */
+.table-responsive {
+    scrollbar-width: thin;
+    scrollbar-color: #dee2e6 transparent;
+}
+
+/* Emoji Box Colors */
+.accent-blue { background: #e7f3ff; color: #0d6efd; }
+.accent-gold { background: #fff9e6; color: #ffc107; }
+.accent-orange { background: #fff0e6; color: #fd7e14; }
+.accent-purple { background: #f3eaff; color: #6f42c1; }
+.accent-gray { background: #f8f9fa; color: #6c757d; }

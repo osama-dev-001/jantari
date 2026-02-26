@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Current Time</title>
+	<!-- Latest compiled and minified CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Latest compiled JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="assets/js/main.js"></script>
+	<script id="city-data-script"></script>
+	<script src="assets/js/navbar.js"></script>
+	<style>
+		:root {
+			--amd-blue: #0d6efd;
+			--amd-dark: #0a58ca;
+		}
+
+		body {
+			background-color: #f4f7f6;
+		}
+
+		/* Live Clock Header */
+		.clock-section {
+			background: linear-gradient(135deg, var(--amd-blue) 0%, var(--amd-dark) 100%);
+			color: white;
+			padding: 30px 0;
+			margin-bottom: 40px;
+			border-bottom-left-radius: 30px;
+			border-bottom-right-radius: 30px;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+		}
+
+		/* Status Cards */
+		.status-card {
+			background: white;
+			border: none;
+			border-radius: 15px;
+			transition: transform 0.3s ease;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+		}
+
+		.status-card:hover {
+			transform: translateY(-5px);
+		}
+
+		.label-tiny {
+			font-size: 0.75rem;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: bold;
+			color: #6c757d;
+		}
+
+		.time-large {
+			font-size: 1.5rem;
+			font-weight: 700;
+			color: #212529;
+		}
+
+		/* Current Highlight */
+		.border-current {
+			border-top: 5px solid #ffc107 !important;
+		}
+
+		.border-next {
+			border-top: 5px solid #dc3545 !important;
+		}
+
+		/* Custom class for Varanasi theme */
+		.vns-theme {
+			background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
+		}
+
+		.vns-text {
+			color: #198754 !important;
+		}
+	</style>
+</head>
+
+<body>
+	<section class="clock-section text-center">
+		<div class="container">
+			<div class="mb-3 d-flex justify-content-center align-items-center gap-2">
+				<span class="badge rounded-pill bg-white text-dark py-2 px-3 shadow-sm">
+					<i class="bi bi-geo-alt-fill me-1"></i> Location:
+				</span>
+				<select id="location-switcher" class="form-select form-select-sm w-auto shadow-sm border-0" style="cursor: pointer;">
+					<option value="amd">Ahmedabad</option>
+					<option value="vns">Varanasi</option>
+				</select>
+			</div>
+
+			<h1 class="display-6 fw-bold mb-0" id="live-clock">00:00:00 AM</h1>
+			<p class="opacity-75 mb-0" id="display-date">Loading date...</p>
+		</div>
+	</section>
+
+	<div class="container mt-4">
+		<div class="card status-card shadow-sm overflow-hidden">
+			<div class="card-header bg-white py-3 border-0">
+				<h5 class="mb-0 fw-bold text-center text-secondary">Today's Full Schedule</h5>
+			</div>
+			<div class="list-group list-group-flush" id="daily-schedule">
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function () {
+			// 1. Determine city from URL or default to 'amd'
+			const urlParams = new URLSearchParams(window.location.search);
+			let currentCity = urlParams.get('city') || 'amd';
+
+			// 2. Set the dropdown to the current city
+			$('#location-switcher').val(currentCity);
+
+			// 3. Handle manual location change
+			$('#location-switcher').on('change', function () {
+				const selectedCity = $(this).val();
+				// Redirect to the same page with the new city parameter
+				window.location.href = `jantari.html?city=${selectedCity}`;
+			});
+
+			// 4. Load the city-specific data file
+			const dataFile = currentCity === 'vns' ? 'vns.js' : 'amd.js';
+			$.getScript(`assets/js/${dataFile}`)
+				.done(function () {
+					console.log(`${currentCity} data loaded.`);
+					applyTheme(currentCity);
+					updateUI(); // Your existing function to calculate timings
+					setInterval(updateUI, 1000);
+				})
+				.fail(function () {
+					alert("Error loading city data. Please check your JS files.");
+				});
+		});
+
+		function applyTheme(city) {
+			if (city === 'vns') {
+				$('.clock-section').addClass('vns-theme'); // Use the green style you created
+				$('#city-badge').addClass('text-success').removeClass('text-primary');
+			} else {
+				$('.clock-section').removeClass('vns-theme'); // Default to Blue
+				$('#city-badge').addClass('text-primary').removeClass('text-success');
+			}
+		}
+
+		function applyCityTheme(city) {
+			const config = {
+				'vns': { name: 'VARANASI', class: 'vns-theme', text: 'text-success' },
+				'amd': { name: 'AHMEDABAD', class: '', text: 'text-primary' },
+				'delhi': { name: 'DELHI', class: 'delhi-theme', text: 'text-danger' } // Easy to add more!
+			};
+
+			const settings = config[city] || config['amd'];
+
+			$('#city-badge').text(`📍 ${settings.name} DATA`);
+			$('#city-badge').removeClass('text-primary text-success text-danger').addClass(settings.text);
+
+			if (settings.class) {
+				$('.clock-section').addClass(settings.class);
+			}
+		}
+
+		function updateUI() {
+			const dateTime = getFormattedDateTime();
+			$('#live-clock').text(`${dateTime.hours}:${dateTime.minutes}:${dateTime.seconds} ${dateTime.ampm}`);
+			$('#display-date').text(`${dateTime.date} ${dateTime.month}, 2026`);
+
+			if (data[dateTime.month]) {
+				const todayData = data[dateTime.month].find(entry => entry.Date == dateTime.date);
+				if (todayData) {
+					const currentTime = parseTime(`${dateTime.hours}:${dateTime.minutes} ${dateTime.ampm}`);
+
+					// Sort and filter prayer times
+					const sortedPrayerTimes = Object.entries(todayData)
+						.filter(([key, value]) => key !== 'Date')
+						.map(([key, value]) => ({ key, time: parseTime(value), original: value }))
+						.sort((a, b) => (a.time.hours - b.time.hours) || (a.time.minutes - b.time.minutes));
+
+					const nextIndex = sortedPrayerTimes.findIndex(prayer => isLater(prayer.time, currentTime));
+					let scheduleHtml = '';
+
+					sortedPrayerTimes.forEach((prayer, index) => {
+						let statusClass = "bg-white";
+						let textClass = "text-dark";
+						let badge = "";
+
+						// Logic for "Success" (Current) and "Danger" (Next/Ends At)
+						if (index === nextIndex - 1) {
+							statusClass = "bg-success text-white shadow-sm"; // Success tone for Current
+							textClass = "text-white";
+							badge = '<span class="badge bg-light text-success ms-2">Current Active</span>';
+						} else if (index === nextIndex) {
+							statusClass = "bg-danger text-white shadow-sm"; // Danger tone for Next/Ends At
+							textClass = "text-white";
+							badge = '<span class="badge bg-light text-danger ms-2">Starts Next</span>';
+						}
+
+						scheduleHtml += `
+                    <div class="list-group-item ${statusClass} d-flex justify-content-between align-items-center py-3 border-bottom">
+                        <div>
+                            <span class="fw-bold">${prayer.key}</span>
+                            ${badge}
+                        </div>
+                        <div class="fw-bold ${textClass}">${prayer.original}</div>
+                    </div>`;
+					});
+
+					$('#daily-schedule').html(scheduleHtml);
+				}
+			}
+		}
+
+		// Run once on load and then every second for the clock
+		$(document).ready(function () {
+			updateUI();
+			setInterval(updateUI, 1000);
+		});
+
+		function getFormattedDateTime() {
+			const now = new Date();
+
+			const month = now.toLocaleString('default', { month: 'long' });
+			const date = String(now.getDate()).padStart(2, '0');
+			let hours = now.getHours();
+			const minutes = String(now.getMinutes()).padStart(2, '0');
+			const seconds = String(now.getSeconds()).padStart(2, '0');
+
+			const ampm = hours >= 12 ? 'PM' : 'AM';
+			hours = hours % 12;
+			hours = hours ? hours : 12; // the hour '0' should be '12'
+			hours = String(hours).padStart(2, '0');
+
+			const result = { month, date, hours, minutes, seconds, ampm };
+			return result;
+		}
+
+		function parseTime(timeStr) {
+			const [time, modifier] = timeStr.split(' ');
+			let [hours, minutes] = time.split(':').map(Number);
+
+			if (modifier === 'PM' && hours !== 12) {
+				hours += 12;
+			} else if (modifier === 'AM' && hours === 12) {
+				hours = 0;
+			}
+
+			return { hours, minutes };
+		}
+
+		function isLater(time1, time2) {
+			if (time1.hours > time2.hours) {
+				return true;
+			}
+			if (time1.hours === time2.hours && time1.minutes > time2.minutes) {
+				return true;
+			}
+			return false;
+		}
+
+		const dateTime = getFormattedDateTime();
+		console.log('Current time:', dateTime);
+
+		if (data[dateTime.month]) {
+			const todayData = data[dateTime.month].find(entry => entry.Date == dateTime.date);
+			console.log('Today\'s data:', todayData);
+
+			if (todayData) {
+				const currentTime = parseTime(`${dateTime.hours}:${dateTime.minutes} ${dateTime.ampm}`);
+
+				const sortedPrayerTimes = Object.entries(todayData).filter(([key, value]) => {
+					return key !== 'Date';
+				}).map(([key, value]) => {
+					const parsedTime = parseTime(value);
+					return { key, time: parsedTime, original: value };
+				}).sort((a, b) => {
+					if (a.time.hours !== b.time.hours) {
+						return a.time.hours - b.time.hours;
+					}
+					return a.time.minutes - b.time.minutes;
+				});
+
+				const nextPrayerIndex = sortedPrayerTimes.findIndex(prayer => isLater(prayer.time, currentTime));
+				const previousTwoRecords = sortedPrayerTimes.slice(Math.max(0, nextPrayerIndex - 2), nextPrayerIndex);
+				const nextPrayerTime = sortedPrayerTimes[nextPrayerIndex];
+				$('#nextPrayerTime').val(nextPrayerTime.key + ": " + nextPrayerTime.original)
+
+				var previousSalahTime = previousTwoRecords[0].key + ": " + previousTwoRecords[0].original
+				var currentSalahTime = previousTwoRecords[1].key + ": " + previousTwoRecords[1].original
+				console.log('Previous two records:', currentSalahTime);
+				$('.current-time').val(currentSalahTime);
+				$('.previous-time').val(previousSalahTime);
+				console.log('Next prayer time:', nextPrayerTime);
+			} else {
+				console.log('No data found for today\'s date.');
+			}
+		} else {
+			console.log('No data found for the current month.');
+		}
+
+
+		$(document).ready(function () {
+			$("#city").change(function () {
+				var city = $("#city").val();
+				var type = $("#type").val();
+			})
+
+		})
+
+	</script>
+</body>
+
+</html>
