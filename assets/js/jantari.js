@@ -159,7 +159,7 @@ function updateUI() {
 }
 
 const emojiMapping = {
-	"Date": "📅",
+	"Date": "🗓️",
 	"Sehri": "⏳", "Fajr": "🌃",
 	"Tuloo": "🌄", "Sunrise": "🌄",
 	"Zawal": "☀️", "Dahwa": "☀️",
