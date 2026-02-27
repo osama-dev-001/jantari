@@ -12,97 +12,123 @@ body {
 }
 
 /* ==========================================
-   2. HEADER & CLOCK SECTION (Glassmorphism)
+   2. HEADER & CLOCK SECTION (Responsive)
+   ========================================== */
+/* ==========================================
+   2. HEADER & CLOCK SECTION (Refined)
+   ========================================== */
+/* ==========================================
+   2. HEADER & CLOCK SECTION (Compact Mobile)
    ========================================== */
 .clock-section {
     background: linear-gradient(180deg, #198754 0%, #146c43 100%);
     color: white;
-    padding: 15px 0 20px 0;
+    padding: 12px 15px; /* Tight overall padding */
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     position: relative;
-    transition: all 0.5s ease;
-}
-
-.vns-theme {
-    background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
 }
 
 .header-flex {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* New Single Row for Date and City */
+.mobile-meta-row {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
-    min-height: 80px;
-}
-
-/* Glassmorphism Clock Box */
-.glass-time-box {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 8px 25px;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-    text-align: center;
-    z-index: 2;
-}
-
-#live-clock {
-    font-size: 1.2rem;
-    font-weight: 800;
-    margin: 0;
-    letter-spacing: -1px;
-    line-height: 1;
+    width: 100%;
+    margin-bottom: 2px;
 }
 
 #display-date {
-    font-size: 0.85rem;
-    font-weight: 500;
+    font-size: 0.75rem;
+    font-weight: 600;
     opacity: 0.9;
-    margin: 0;
 }
 
-/* Countdown Row */
-.next-salah-countdown {
+.city-pill {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 10px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#location-switcher {
+    background: transparent;
+    border: none;
+    color: white !important;
     font-size: 0.75rem;
+    font-weight: 600;
+    outline: none;
+}
+
+/* Glass Clock Box - Compact */
+.glass-time-box {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    max-width: 280px;
+}
+
+#live-clock {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1;
+}
+
+.next-salah-countdown {
+    font-size: 0.65rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
     margin-top: 5px;
     padding-top: 5px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    opacity: 0.9;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255,255,255,0.8);
 }
 
 #countdown-timer {
-    color: #ffc107;
+    color: #ffc107 !important; /* Restored Yellow Color */
+    font-weight: 700;
 }
 
-/* Clock Colon Animation */
-@keyframes blink {
-    50% { opacity: 0.3; }
+/* Desktop Restoration */
+@media (min-width: 768px) {
+    .header-flex { flex-direction: row; min-height: 80px; }
+    .mobile-meta-row { width: auto; gap: 20px; order: 1; }
+    .glass-time-box { 
+        position: absolute; 
+        left: 50%; 
+        top: 50%; 
+        transform: translate(-50%, -50%); 
+        order: 2;
+    }
 }
 
-.clock-colon {
-    animation: blink 1s step-start infinite;
-    margin: 0 2px;
+/* Secondary Info Row */
+#display-date {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-bottom: 2px;
 }
 
-/* City Switcher Pill */
 .city-pill {
     background: rgba(255, 255, 255, 0.15);
-    padding: 4px 12px;
+    padding: 2px 10px;
     border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 #location-switcher {
@@ -259,9 +285,103 @@ body {
     scrollbar-color: #dee2e6 transparent;
 }
 
+/* ==========================================
+   MOBILE-FIRST HEADER (Date & City on 1 line)
+   ========================================== */
+.header-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px; /* Controlled spacing between top row and clock */
+}
+
+.mobile-meta-row {
+    display: flex;
+    justify-content: space-between; /* Pushes date left, city right */
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+#display-date {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.city-pill {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 10px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+.city-label {
+    font-size: 0.65rem;
+    opacity: 0.7;
+    margin-right: 4px;
+    font-weight: 800;
+}
+
+#location-switcher {
+    background: transparent;
+    border: none;
+    color: white !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Glass Clock Adjustments */
+.glass-time-box {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 20px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+
+#countdown-timer {
+    color: #ffc107 !important; /* Forces the yellowish color back */
+}
+
+/* DESKTOP VIEW: Keep original layout */
+@media (min-width: 768px) {
+    .header-flex {
+        flex-direction: row;
+        justify-content: space-between;
+        min-height: 90px;
+    }
+    .mobile-meta-row {
+        display: contents; /* Dissolves the row container to allow original desktop positioning */
+    }
+    .glass-time-box {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+
 /* Emoji Box Colors */
 .accent-blue { background: #e7f3ff; color: #0d6efd; }
 .accent-gold { background: #fff9e6; color: #ffc107; }
 .accent-orange { background: #fff0e6; color: #fd7e14; }
 .accent-purple { background: #f3eaff; color: #6f42c1; }
 .accent-gray { background: #f8f9fa; color: #6c757d; }
+
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 15px;
+}
