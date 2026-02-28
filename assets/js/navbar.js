@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Detect current city from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const city = urlParams.get('city') || 'amd';
-    const cityName = city === 'vns' ? 'Varanasi' : 'Ahmedabad';
+    const city = urlParams.get('city') || 'vns';
+    const cityName = city === 'amd' ? 'Ahmedabad' : 'Varanasi';
 
     const navHtml = `
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
